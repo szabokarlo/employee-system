@@ -36,10 +36,16 @@ class EmployeeRepository
             $parameters[]      = $employeeNameFilter->getValue();
         }
 
+        $departmentNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::FILTER_COLUMN_DEPARTMENT_NAME);
+        if ($departmentNameFilter) {
+            $whereConditions[] = 'd.dept_name = ?';
+            $parameters[]      = $departmentNameFilter->getValue();
+        }
+
         $where = '';
 
         if ($whereConditions) {
-            $where = 'WHERE ' . implode(' AND', $whereConditions);
+            $where = 'WHERE ' . implode('AND ', $whereConditions);
         }
 
         $statement = $this->dbConnection->prepare("
