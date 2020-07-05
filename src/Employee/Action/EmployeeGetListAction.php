@@ -32,8 +32,9 @@ class EmployeeGetListAction extends Action
         $page           = $this->getGetParameter(EmployeeGetListInput::PAGE, '');
         $recordsPerPage = $this->getGetParameter(EmployeeGetListInput::RECORDS_PER_PAGE, '');
         $filters        = $this->getGetParameter(EmployeeGetListInput::FILTERS, []);
+        $orderBy        = $this->getGetParameter(EmployeeGetListInput::ORDER_BY, []);
 
-        $input = new EmployeeGetListInput($page, $recordsPerPage, $filters);
+        $input = new EmployeeGetListInput($page, $recordsPerPage, $filters, $orderBy);
 
         $employees = $this->employeeService->getList($input);
 

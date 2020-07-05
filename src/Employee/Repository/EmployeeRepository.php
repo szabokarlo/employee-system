@@ -7,6 +7,7 @@ namespace App\Employee\Repository;
 use App\Employee\Domain\EmployeeCollection;
 use App\Employee\Input\EmployeeGetListInput;
 use App\Employee\Mapper\EmployeeMapper;
+use InvalidArgumentException;
 use PDO;
 
 class EmployeeRepository
@@ -30,21 +31,21 @@ class EmployeeRepository
         $whereConditions = [];
         $parameters      = [];
 
-        $employeeNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::FILTER_COLUMN_EMPLOYEE_NAME);
+        $employeeNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::COLUMN_EMPLOYEE_NAME);
         if ($employeeNameFilter) {
-            $whereConditions[] = 'CONCAT(e.first_name, " ", e.last_name) LIKE CONCAT("%", ?, "%")';
+            $whereConditions[] = $this->getDatabaseColumnByInput(EmployeeGetListInput::COLUMN_EMPLOYEE_NAME) . ' LIKE CONCAT("%", ?, "%")';
             $parameters[]      = $employeeNameFilter->getValue();
         }
 
-        $departmentNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::FILTER_COLUMN_DEPARTMENT_NAME);
+        $departmentNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::COLUMN_DEPARTMENT_NAME);
         if ($departmentNameFilter) {
-            $whereConditions[] = 'd.dept_name = ?';
+            $whereConditions[] = $this->getDatabaseColumnByInput(EmployeeGetListInput::COLUMN_DEPARTMENT_NAME) . ' = ?';
             $parameters[]      = $departmentNameFilter->getValue();
         }
 
-        $positionNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::FILTER_COLUMN_POSITION_NAME);
+        $positionNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::COLUMN_POSITION_NAME);
         if ($positionNameFilter) {
-            $whereConditions[] = 'cet.title = ?';
+            $whereConditions[] = $this->getDatabaseColumnByInput(EmployeeGetListInput::COLUMN_POSITION_NAME) . ' = ?';
             $parameters[]      = $positionNameFilter->getValue();
         }
 
@@ -52,6 +53,11 @@ class EmployeeRepository
 
         if ($whereConditions) {
             $where = 'WHERE ' . implode('AND ', $whereConditions);
+        }
+
+        $orderBy = $input->getOrderBy();
+        if ($orderBy) {
+            $orderBy = 'ORDER BY ' . $this->getDatabaseColumnByInput($orderBy->getColumn()) . ' ' . $orderBy->getDirection();
         }
 
         $statement = $this->dbConnection->prepare("
@@ -64,6 +70,7 @@ class EmployeeRepository
             LEFT JOIN current_employee_title AS cet ON cet.emp_no = e.emp_no
             LEFT JOIN current_employee_salary AS ces ON ces.emp_no = e.emp_no
             $where
+            $orderBy
             LIMIT $offset, $recordsPerPage
         ");
 
@@ -81,9 +88,34 @@ class EmployeeRepository
             FROM
                 employees
             WHERE 
-            emp_no = ?
+                emp_no = ?
         ");
 
         $statement->execute([$id]);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function getDatabaseColumnByInput(string $inputColumnName): string
+    {
+        switch ($inputColumnName) {
+            case EmployeeGetListInput::COLUMN_DEPARTMENT_NAME:
+                return 'd.dept_name';
+
+                break;
+            case EmployeeGetListInput::COLUMN_EMPLOYEE_NAME:
+                return 'CONCAT(e.first_name, " ", e.last_name)';
+
+                break;
+
+            case EmployeeGetListInput::COLUMN_POSITION_NAME:
+                return 'cet.title';
+
+                break;
+
+            default:
+                throw new InvalidArgumentException('Unsupported column name. Got ' . $inputColumnName);
+        }
     }
 }
