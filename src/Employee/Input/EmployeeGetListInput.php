@@ -14,9 +14,9 @@ class EmployeeGetListInput
 
     public const FILTER_COLUMN_EMPLOYEE_NAME   = 'employee_name';
     public const FILTER_COLUMN_DEPARTMENT_NAME = 'department_name';
+    public const FILTER_COLUMN_POSITION_NAME   = 'position_name';
 
-    private const MIN_PAGE       = 1;
-
+    private const MIN_PAGE             = 1;
     private const MIN_RECORDS_PER_PAGE = 1;
     private const MAX_RECORDS_PER_PAGE = 20;
 
@@ -25,7 +25,8 @@ class EmployeeGetListInput
 
     private static array $availableFilterColumns = [
         self::FILTER_COLUMN_EMPLOYEE_NAME,
-        self::FILTER_COLUMN_DEPARTMENT_NAME
+        self::FILTER_COLUMN_DEPARTMENT_NAME,
+        self::FILTER_COLUMN_POSITION_NAME,
     ];
 
     private int $page;

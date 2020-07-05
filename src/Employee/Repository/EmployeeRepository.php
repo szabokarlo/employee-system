@@ -42,6 +42,12 @@ class EmployeeRepository
             $parameters[]      = $departmentNameFilter->getValue();
         }
 
+        $positionNameFilter = $filters->getFilterByColumn(EmployeeGetListInput::FILTER_COLUMN_POSITION_NAME);
+        if ($positionNameFilter) {
+            $whereConditions[] = 'cet.title = ?';
+            $parameters[]      = $positionNameFilter->getValue();
+        }
+
         $where = '';
 
         if ($whereConditions) {
@@ -50,11 +56,13 @@ class EmployeeRepository
 
         $statement = $this->dbConnection->prepare("
             SELECT 
-                e.*, cde.from_date, cde.to_date, d.dept_no, d.dept_name
+                e.*, cde.from_date, cde.to_date, d.dept_no, d.dept_name, cet.title, ces.salary
             FROM
                 employees AS e
             LEFT JOIN current_dept_emp AS cde ON cde.emp_no = e.emp_no
             LEFT JOIN departments AS d ON d.dept_no = cde.dept_no
+            LEFT JOIN current_employee_title AS cet ON cet.emp_no = e.emp_no
+            LEFT JOIN current_employee_salary AS ces ON ces.emp_no = e.emp_no
             $where
             LIMIT $offset, $recordsPerPage
         ");

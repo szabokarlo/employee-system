@@ -10,13 +10,6 @@ use Exception;
 
 class EmployeeMapper
 {
-    private CurrentDepartmentMapper $currentDepartmentMapper;
-
-    public function __construct(CurrentDepartmentMapper $currentDepartmentMapper)
-    {
-        $this->currentDepartmentMapper = $currentDepartmentMapper;
-    }
-
     public function toCollection(array $employees): EmployeeCollection
     {
         $employeeCollection = new EmployeeCollection();
@@ -43,7 +36,9 @@ class EmployeeMapper
             (string)$employee['gender'],
             (string)$employee['birth_date'],
             (string)$employee['hire_date'],
-            $this->currentDepartmentMapper->toDomain($employee)
+            (string)$employee['dept_name'],
+            (string)$employee['title'],
+            (int)$employee['salary']
         );
     }
 }

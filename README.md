@@ -26,6 +26,8 @@ mysql -u root -p
 The password will be asked: type securedPassw0rd
 
 source employees.sql
+
+source extra.sql
 ```
 
 ## Run

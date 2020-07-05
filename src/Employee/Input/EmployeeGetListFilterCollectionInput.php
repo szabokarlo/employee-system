@@ -19,6 +19,8 @@ class EmployeeGetListFilterCollectionInput extends ArrayIterator
 
     public function getFilterByColumn(string $columnName): ?EmployeeGetListFilterInput
     {
-        return $this->filters[$columnName] ?: null;
+        return isset($this->filters[$columnName])
+            ? $this->filters[$columnName]
+            : null;
     }
 }

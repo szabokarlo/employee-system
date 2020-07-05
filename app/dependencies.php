@@ -59,11 +59,7 @@ return function (ContainerBuilder $containerBuilder) {
             return new EmployeeService(
                 new EmployeeRepository(
                     $container->get(PDO::class),
-                    new EmployeeMapper(
-                        new CurrentDepartmentMapper(
-                            new DepartmentMapper()
-                        )
-                    )
+                    new EmployeeMapper()
                 )
             );
         },

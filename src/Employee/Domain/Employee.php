@@ -12,7 +12,9 @@ class Employee
     private string $gender;
     private string $birthDate;
     private string $hireDate;
-    private CurrentDepartment $currentDepartment;
+    private string $department;
+    private string $position;
+    private int $salary;
 
     public function __construct(
         int $id,
@@ -21,15 +23,19 @@ class Employee
         string $gender,
         string $birthDate,
         string $hireDate,
-        CurrentDepartment $currentDepartment
+        string $department,
+        string $position,
+        int $salary
     ) {
-        $this->id                = $id;
-        $this->firstName         = $firstName;
-        $this->lastName          = $lastName;
-        $this->gender            = $gender;
-        $this->birthDate         = $birthDate;
-        $this->hireDate          = $hireDate;
-        $this->currentDepartment = $currentDepartment;
+        $this->id         = $id;
+        $this->firstName  = $firstName;
+        $this->lastName   = $lastName;
+        $this->gender     = $gender;
+        $this->birthDate  = $birthDate;
+        $this->hireDate   = $hireDate;
+        $this->department = $department;
+        $this->position   = $position;
+        $this->salary     = $salary;
     }
 
     public function getId(): int
@@ -62,8 +68,18 @@ class Employee
         return $this->birthDate;
     }
 
-    public function getCurrentDepartment(): CurrentDepartment
+    public function getDepartment(): string
     {
-        return $this->currentDepartment;
+        return $this->department;
+    }
+
+    public function getPosition(): string
+    {
+        return $this->position;
+    }
+
+    public function getSalary(): int
+    {
+        return $this->salary;
     }
 }
