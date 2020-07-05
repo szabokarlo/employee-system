@@ -27,7 +27,7 @@ class EmployeeMapper
         return $employeeCollection;
     }
 
-    private function toDomain(array $employee): Employee
+    public function toDomain(array $employee): Employee
     {
         return new Employee(
             (int)$employee['emp_no'],

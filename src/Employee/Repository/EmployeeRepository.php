@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Employee\Repository;
 
+use App\Employee\Domain\Employee;
 use App\Employee\Domain\EmployeeCollection;
 use App\Employee\Input\EmployeeGetListInput;
 use App\Employee\Mapper\EmployeeMapper;
+use Exception;
 use InvalidArgumentException;
 use PDO;
 
@@ -79,6 +81,62 @@ class EmployeeRepository
         $employees = $statement->fetchAll();
 
         return $this->employeeMapper->toCollection($employees);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function get(int $employeeId): Employee
+    {
+        $statement = $this->dbConnection->prepare("
+            SELECT 
+                e.*, d.dept_name, cet.title, ces.salary
+            FROM
+                employees AS e
+            LEFT JOIN current_dept_emp AS cde ON cde.emp_no = e.emp_no
+            LEFT JOIN departments AS d ON d.dept_no = cde.dept_no
+            LEFT JOIN current_employee_title AS cet ON cet.emp_no = e.emp_no
+            LEFT JOIN current_employee_salary AS ces ON ces.emp_no = e.emp_no
+            WHERE e.emp_no = ?
+            LIMIT 0, 1
+        ");
+
+        $statement->execute([$employeeId]);
+
+        $employee = $statement->fetch();
+
+        if (!$employee) {
+            throw new Exception('The user is not found.');
+        }
+
+        return $this->employeeMapper->toDomain($employee);
+    }
+
+    public function update(Employee $employee)
+    {
+        $statement = $this->dbConnection->prepare("
+            UPDATE 
+                employees
+            SET 
+                birth_date = ?,
+                first_name = ?,
+                last_name = ?,
+                gender = ?,
+                hire_date = ?
+            WHERE
+                emp_no = ?
+        ");
+
+        $statement->execute(
+            [
+                $employee->getBirthDate(),
+                $employee->getFirstName(),
+                $employee->getLastName(),
+                $employee->getGender(),
+                $employee->getHireDate(),
+                $employee->getId()
+            ]
+        );
     }
 
     public function delete(int $id)

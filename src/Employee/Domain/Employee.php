@@ -48,9 +48,23 @@ class Employee
         return $this->firstName;
     }
 
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
     }
 
     public function getGender(): string
@@ -58,14 +72,35 @@ class Employee
         return $this->gender;
     }
 
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
     public function getBirthDate(): string
     {
         return $this->birthDate;
     }
 
+    public function setBirthDate(string $birthDate): self
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
     public function getHireDate(): string
     {
-        return $this->birthDate;
+        return $this->hireDate;
+    }
+
+    public function setHireDate(string $hireDate): self
+    {
+        $this->hireDate = $hireDate;
+
+        return $this;
     }
 
     public function getDepartment(): string

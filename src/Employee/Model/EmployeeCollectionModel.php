@@ -8,7 +8,7 @@ use App\Employee\Domain\Employee;
 use App\Employee\Domain\EmployeeCollection;
 use JsonSerializable;
 
-class EmployeeGetListModel implements JsonSerializable
+class EmployeeCollectionModel implements JsonSerializable
 {
     private EmployeeCollection $employees;
 

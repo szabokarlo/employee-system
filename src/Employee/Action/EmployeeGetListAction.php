@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Employee\Action;
 
 use App\Employee\Input\EmployeeGetListInput;
-use App\Employee\Model\EmployeeGetListModel;
+use App\Employee\Model\EmployeeCollectionModel;
 use App\Employee\Service\EmployeeService;
 use App\SlimSkeleton\Actions\Action;
 use Exception;
@@ -39,7 +39,7 @@ class EmployeeGetListAction extends Action
         $employees = $this->employeeService->getList($input);
 
         return $this->respondWithData(
-            new EmployeeGetListModel($employees)
+            new EmployeeCollectionModel($employees)
         );
     }
 

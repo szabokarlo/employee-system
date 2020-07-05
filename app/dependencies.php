@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Employee\Mapper\CurrentDepartmentMapper;
-use App\Employee\Mapper\DepartmentMapper;
 use App\Employee\Mapper\EmployeeMapper;
 use App\Employee\Repository\EmployeeRepository;
 use App\Employee\Service\EmployeeService;
