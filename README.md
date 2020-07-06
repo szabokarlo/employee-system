@@ -29,6 +29,9 @@ source employees.sql
 
 source extra.sql
 ```
+## Unit tests
+Please note that I haven't tested the sources from SlimSkeleton because these are originated from Slim Skeleton project.
+
 
 ## Run unit tests
 
