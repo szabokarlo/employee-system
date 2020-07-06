@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\Employee\Domain;
 
 use App\Employee\Domain\Employee;
-use App\Employee\Domain\EmployeeCollection;
-use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeTest extends TestCase
