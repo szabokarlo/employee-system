@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Employee System</title>
+    <meta name="description" content="Employee Sytem">
+</head>
+<body>
+Employee System layout
+
+<table>
+    <tr>
+        <td>Endpoint for getting the employee list: </td>
+        <td><a href="http://localhost:8080/employee/get-list?page=1&records_per_page=4&filters[0][column]=employee_name&filters[0][value]=Facello&filters[1][column]=department_name&filters[1][value]=Research&filters[2][column]=position_name&filters[2][value]=Senior%20Staff&order_by[column]=employee_name&order_by[direction]=desc">link</a></td>
+    </tr>
+    <tr>
+        <td>Endpoint for getting an employee: </td>
+        <td><a href="http://localhost:8080/employee/428653/get">link</a></td>
+    </tr>
+    <tr>
+        <td>Endpoint for updating an employee: </td>
+        <td>[POST] http://localhost:8080/employee/1/update</td>
+    </tr>
+    <tr>
+        <td>Endpoint for deleting an employee: </td>
+        <td>[DELETE] http://localhost:8080/employee/1/delete</td>
+    </tr>
+</table>
+</body>
+</html>

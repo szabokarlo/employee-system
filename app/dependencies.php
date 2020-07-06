@@ -11,6 +11,8 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -60,6 +62,13 @@ return function (ContainerBuilder $containerBuilder) {
                     new EmployeeMapper()
                 )
             );
+        },
+        'view' => function (ContainerInterface $c) {
+            $view = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+
+            $view->addExtension(new TwigExtension());
+
+            return $view;
         },
     ]);
 };
