@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Employee\Input;
 
+use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
 class EmployeeGetListInput
@@ -13,12 +14,12 @@ class EmployeeGetListInput
     public const FILTERS          = 'filters';
     public const ORDER_BY         = 'order_by';
 
-    private const FILTER_COLUMN        = 'column';
-    private const FILTER_VALUE         = 'value';
-
     public const COLUMN_EMPLOYEE_NAME   = 'employee_name';
     public const COLUMN_DEPARTMENT_NAME = 'department_name';
     public const COLUMN_POSITION_NAME   = 'position_name';
+
+    private const FILTER_COLUMN        = 'column';
+    private const FILTER_VALUE         = 'value';
 
     private const MIN_PAGE             = 1;
     private const MIN_RECORDS_PER_PAGE = 1;
@@ -52,6 +53,9 @@ class EmployeeGetListInput
     private EmployeeGetListFilterCollectionInput $filters;
     private ?EmployeeGetListOrderByInput $orderBy;
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function __construct(
         string $page,
         string $recordsPerPage,

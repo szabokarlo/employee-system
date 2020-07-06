@@ -6,14 +6,10 @@ namespace Tests\Employee\Input;
 
 use App\Employee\Input\EmployeeGetListFilterCollectionInput;
 use App\Employee\Input\EmployeeGetListFilterInput;
-use Exception;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeGetListFilterCollectionInputTest extends TestCase
 {
-    /**
-     * @throws Exception
-     */
     public function testGetFilterByColumn()
     {
         $filter1Column = 'filter1';
@@ -40,7 +36,6 @@ class EmployeeGetListFilterCollectionInputTest extends TestCase
         $this->assertSame($filter1, $sut->getFilterByColumn($filter1Column));
         $this->assertSame($filter2, $sut->getFilterByColumn($filter2Column));
         $this->assertEquals(null, $sut->getFilterByColumn('undefined'));
-
     }
 }
 
