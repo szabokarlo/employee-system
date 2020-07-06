@@ -49,11 +49,11 @@ class EmployeeTest extends TestCase
         $newBirthDate = '2010-02-04';
         $newHireDate  = '2017-06-09';
 
-        $sut->setFirstName($newFirstName)
-            ->setLastName($newLastName)
-            ->setGender($newGender)
-            ->setBirthDate($newBirthDate)
-            ->setHireDate($newHireDate);
+        $sut->setFirstName($newFirstName);
+        $sut->setLastName($newLastName);
+        $sut->setGender($newGender);
+        $sut->setBirthDate($newBirthDate);
+        $sut->setHireDate($newHireDate);
 
         $this->assertEquals($newFirstName, $sut->getFirstName());
         $this->assertEquals($newLastName, $sut->getLastName());

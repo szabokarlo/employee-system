@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Employee\Action;
 
-use App\Employee\Domain\Employee;
+use App\Employee\Input\EmployeeUpdateInput;
 use App\Employee\Service\EmployeeService;
 use App\SlimSkeleton\Actions\Action;
 use Exception;
@@ -28,17 +28,13 @@ class EmployeeUpdateAction extends Action
      */
     protected function action(): Response
     {
+        $input = new EmployeeUpdateInput($this->request->getParsedBody());
+
         $employeeId = (int)$this->resolveArg('id');
 
         $employee =  $this->employeeService->get($employeeId);
 
-        $employee->setBirthDate('1985-02-15')
-            ->setFirstName('first')
-            ->setLastName('last')
-            ->setGender('F')
-            ->setHireDate('2020-07-10');
-
-        $this->employeeService->update($employee);
+        $this->employeeService->update($employee, $input);
 
         return $this->respondWithData();
     }

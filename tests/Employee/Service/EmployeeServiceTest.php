@@ -7,6 +7,7 @@ namespace Tests\Employee\Service;
 use App\Employee\Domain\Employee;
 use App\Employee\Domain\EmployeeCollection;
 use App\Employee\Input\EmployeeGetListInput;
+use App\Employee\Input\EmployeeUpdateInput;
 use App\Employee\Repository\EmployeeRepository;
 use App\Employee\Service\EmployeeService;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -65,15 +66,60 @@ class EmployeeServiceTest extends TestCase
 
     public function testUpdate()
     {
+        $birthDate = '1985-02-04';
+        $firstName = 'firstName';
+        $lastName  = 'lastName';
+        $gender    = 'gender';
+        $hireDate  = '1998-01-17';
+
+        /** @var EmployeeUpdateInput|MockObject $input */
+        $input = $this->createMock(EmployeeUpdateInput::class);
+
+        $input->expects($this->once())
+            ->method('getBirthDate')
+            ->willReturn($birthDate);
+
+        $input->expects($this->once())
+            ->method('getFirstName')
+            ->willReturn($firstName);
+
+        $input->expects($this->once())
+            ->method('getLastName')
+            ->willReturn($lastName);
+
+        $input->expects($this->once())
+            ->method('getGender')
+            ->willReturn($gender);
+
+        $input->expects($this->once())
+            ->method('getHireDate')
+            ->willReturn($hireDate);
+
         /** @var Employee|MockObject $employee */
-        $employee = $this->getMockBuilder(Employee::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $employee = $this->createMock(Employee::class);
+
+        $employee->expects($this->once())
+            ->method('setBirthDate')
+            ->with($birthDate);
+
+        $employee->expects($this->once())
+            ->method('setFirstName')
+            ->with($firstName);
+
+        $employee->expects($this->once())
+            ->method('setLastName')
+            ->with($lastName);
+
+        $employee->expects($this->once())
+            ->method('setGender')
+            ->with($gender);
+
+        $employee->expects($this->once())
+            ->method('setHireDate')
+            ->with($hireDate);
 
         /** @var EmployeeRepository|MockObject $repository */
-        $repository = $this->getMockBuilder(EmployeeRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $repository = $this->createMock(EmployeeRepository::class);
 
         $repository->expects($this->once())
             ->method('update')
@@ -81,7 +127,7 @@ class EmployeeServiceTest extends TestCase
 
         $sut = new EmployeeService($repository);
 
-        $sut->update($employee);
+        $sut->update($employee, $input);
     }
 
     public function testDelete()

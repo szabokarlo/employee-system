@@ -48,11 +48,9 @@ class Employee
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
-
-        return $this;
     }
 
     public function getLastName(): string
@@ -60,11 +58,9 @@ class Employee
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
-
-        return $this;
     }
 
     public function getGender(): string
@@ -72,11 +68,9 @@ class Employee
         return $this->gender;
     }
 
-    public function setGender(string $gender): self
+    public function setGender(string $gender): void
     {
         $this->gender = $gender;
-
-        return $this;
     }
 
     public function getBirthDate(): string
@@ -84,11 +78,9 @@ class Employee
         return $this->birthDate;
     }
 
-    public function setBirthDate(string $birthDate): self
+    public function setBirthDate(string $birthDate): void
     {
         $this->birthDate = $birthDate;
-
-        return $this;
     }
 
     public function getHireDate(): string
@@ -96,11 +88,9 @@ class Employee
         return $this->hireDate;
     }
 
-    public function setHireDate(string $hireDate): self
+    public function setHireDate(string $hireDate): void
     {
         $this->hireDate = $hireDate;
-
-        return $this;
     }
 
     public function getDepartment(): string
